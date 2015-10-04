@@ -1,10 +1,8 @@
-package uco_374524.movio.pv256.fi.muni.cz.superprojekt;
+package cz.muni.fi.pv256.movio.uco_374524.superprojekt.activity;
 
 import android.app.Application;
 import android.os.Build;
 import android.os.StrictMode;
-
-import uco_374524.movio.pv256.fi.muni.cz.superprojekt.activity.Config;
 
 /**
  * Created by prasniatko on 21/09/15.

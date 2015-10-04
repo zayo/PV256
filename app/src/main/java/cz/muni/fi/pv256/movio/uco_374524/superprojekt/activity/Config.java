@@ -1,6 +1,6 @@
-package uco_374524.movio.pv256.fi.muni.cz.superprojekt.activity;
+package cz.muni.fi.pv256.movio.uco_374524.superprojekt.activity;
 
-import uco_374524.movio.pv256.fi.muni.cz.superprojekt.BuildConfig;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.BuildConfig;
 
 /**
  * Created by prasniatko on 21/09/15.

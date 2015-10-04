@@ -1,11 +1,11 @@
-package uco_374524.movio.pv256.fi.muni.cz.superprojekt.activity;
+package cz.muni.fi.pv256.movio.uco_374524.superprojekt.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import uco_374524.movio.pv256.fi.muni.cz.superprojekt.R;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
 
 public class MainActivity extends Activity {
 
