@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     >
     <fragment
-        class="cz.muni.fi.pv256.movio.uco_374524.superprojekt.fragment.MoviesListFragment"
-        android:id="@+id/list_frag"
+        class="cz.muni.fi.pv256.movio.uco_374524.superprojekt.fragment.MovieDetailFragment"
+        android:id="@+id/details_frag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_list"
+        tools:layout="@layout/fragment_detail"
         />
 </FrameLayout>

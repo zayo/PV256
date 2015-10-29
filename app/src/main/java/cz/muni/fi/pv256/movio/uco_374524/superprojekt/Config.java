@@ -5,4 +5,5 @@ package cz.muni.fi.pv256.movio.uco_374524.superprojekt;
  */
 public class Config {
     public static final boolean STRICT_MODE_ENABLED = BuildConfig.DEBUG;
+    public static final boolean DEBUG = false;
 }

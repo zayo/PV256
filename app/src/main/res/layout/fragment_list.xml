@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MovieListActivity"
+    >
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/movies_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/grid_spacing"
+        android:clipToPadding="false"
+        tools:listitem="@layout/view_movie_item"
+        />
+    <ViewStub
+        android:id="@+id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout="@layout/view_empty"
+        android:layout_gravity="center"
+        />
+    <ViewStub
+        android:id="@+id/no_connection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout="@layout/view_no_connection"
+        android:layout_gravity="center"
+        />
+</FrameLayout>

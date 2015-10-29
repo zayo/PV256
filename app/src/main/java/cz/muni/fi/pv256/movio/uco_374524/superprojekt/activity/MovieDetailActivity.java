@@ -1,31 +1,25 @@
 package cz.muni.fi.pv256.movio.uco_374524.superprojekt.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.fragment.MovieDetailFragment;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
 
+/**
+ * Created by prasniatko on 27/10/15.
+ */
 public class MovieDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_detail);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final MovieDetailFragment mdf =
+            (MovieDetailFragment) getFragmentManager().findFragmentById(R.id.details_frag);
+
+        mdf.setData((Movie) getIntent().getExtras().getParcelable("movie"));
     }
 }
