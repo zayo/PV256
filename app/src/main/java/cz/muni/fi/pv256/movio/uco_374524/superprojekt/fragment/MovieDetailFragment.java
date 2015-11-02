@@ -72,4 +72,8 @@ public class MovieDetailFragment extends Fragment {
         mEmptyView.setVisibility(View.INVISIBLE);
         mContentView.setVisibility(View.VISIBLE);
     }
+
+    public boolean isFragmentUIActive() {
+        return isAdded() && !isDetached() && !isRemoving();
+    }
 }

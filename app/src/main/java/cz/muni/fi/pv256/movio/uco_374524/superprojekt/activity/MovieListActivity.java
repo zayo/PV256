@@ -37,7 +37,7 @@ public class MovieListActivity extends AppCompatActivity {
                 public void onItemClick(View view, int position) {
                     Log.d(TAG, "onItemClick() called with: " + "view = [" + view + "], position = ["
                         + position + "]");
-                    if (mdf == null) {
+                    if (mdf == null || !mdf.isFragmentUIActive()) {
                         Intent intent =
                             new Intent(MovieListActivity.this, MovieDetailActivity.class);
                         intent.putExtra("movie", DataProvider.get().getData().get(position));
