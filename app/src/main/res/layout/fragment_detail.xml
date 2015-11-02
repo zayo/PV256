@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     >
 
     <ScrollView
@@ -191,8 +192,9 @@
         android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Pro zobrazeni detailu vyberte ze seznamu"
+        android:text="@string/select_movie_first"
         android:gravity="center"
         android:padding="@dimen/padmar_normal"
+        tools:visibility="gone"
         />
 </FrameLayout>

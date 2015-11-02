@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Nastavovačka</string>
+    <string name="activity_detail">Obrazkohyb drobnohledem</string>
+    <string name="empty_list">Neni co dat do listu</string>
+    <string name="no_connection">Nemaš net!</string>
+    <string name="select_movie_first">Nevybralsi nic!</string>
+</resources>

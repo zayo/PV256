@@ -12,7 +12,6 @@ import android.graphics.Picture;
 import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Shader;
-import android.util.Log;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -28,6 +27,8 @@ import java.util.HashMap;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.Log;
 
 /*
 
@@ -69,7 +70,9 @@ public class SVGParser {
      * Parse SVG data from an input stream.
      *
      * @param svgData the input stream, with SVG XML data in UTF-8 character encoding.
+     *
      * @return the parsed SVG.
+     *
      * @throws SVGParseException if there is an error while parsing.
      */
     public static SVG getSVGFromInputStream(InputStream svgData) throws SVGParseException {
@@ -78,14 +81,17 @@ public class SVGParser {
 
     /**
      * Parse SVG data from an input stream and scale to the specific size.
+     *
      * @param svgData
      * @param targetWidth
      * @param targetHeight
+     *
      * @return
+     *
      * @throws SVGParseException
      */
     public static SVG getSVGFromInputStream(InputStream svgData, int targetWidth, int targetHeight)
-            throws SVGParseException {
+        throws SVGParseException {
         return SVGParser.parse(svgData, 0, 0, false, targetWidth, targetHeight);
     }
 
@@ -93,8 +99,10 @@ public class SVGParser {
      * Parse SVG data from an Android application resource.
      *
      * @param resources the Android context resources.
-     * @param resId     the ID of the raw resource SVG.
+     * @param resId the ID of the raw resource SVG.
+     *
      * @return the parsed SVG.
+     *
      * @throws SVGParseException if there is an error while parsing.
      */
     public static SVG getSVGFromResource(Resources resources, int resId) throws SVGParseException {
@@ -105,12 +113,15 @@ public class SVGParser {
      * Parse SVG data from an Android application asset.
      *
      * @param assetMngr the Android asset manager.
-     * @param svgPath   the path to the SVG file in the application's assets.
+     * @param svgPath the path to the SVG file in the application's assets.
+     *
      * @return the parsed SVG.
+     *
      * @throws SVGParseException if there is an error while parsing.
-     * @throws IOException       if there was a problem reading the file.
+     * @throws IOException if there was a problem reading the file.
      */
-    public static SVG getSVGFromAsset(AssetManager assetMngr, String svgPath) throws SVGParseException, IOException {
+    public static SVG getSVGFromAsset(AssetManager assetMngr, String svgPath)
+        throws SVGParseException, IOException {
         InputStream inputStream = assetMngr.open(svgPath);
         SVG svg = getSVGFromInputStream(inputStream);
         inputStream.close();
@@ -120,56 +131,69 @@ public class SVGParser {
     /**
      * Parse SVG data from an input stream, replacing a single color with another color.
      *
-     * @param svgData      the input stream, with SVG XML data in UTF-8 character encoding.
-     * @param searchColor  the color in the SVG to replace.
+     * @param svgData the input stream, with SVG XML data in UTF-8 character encoding.
+     * @param searchColor the color in the SVG to replace.
      * @param replaceColor the color with which to replace the search color.
+     *
      * @return the parsed SVG.
+     *
      * @throws SVGParseException if there is an error while parsing.
      */
     public static SVG getSVGFromInputStream(InputStream svgData, int searchColor, int replaceColor,
-                                            int targetWidth, int targetHeight) throws SVGParseException {
-        return SVGParser.parse(svgData, searchColor, replaceColor, false, targetWidth, targetHeight);
+        int targetWidth, int targetHeight) throws SVGParseException {
+        return SVGParser
+            .parse(svgData, searchColor, replaceColor, false, targetWidth, targetHeight);
     }
 
     /**
      * Parse SVG data from a string.
      *
-     * @param svgData      the string containing SVG XML data.
-     * @param searchColor  the color in the SVG to replace.
+     * @param svgData the string containing SVG XML data.
+     * @param searchColor the color in the SVG to replace.
      * @param replaceColor the color with which to replace the search color.
+     *
      * @return the parsed SVG.
+     *
      * @throws SVGParseException if there is an error while parsing.
      */
-    public static SVG getSVGFromString(String svgData, int searchColor, int replaceColor) throws SVGParseException {
-        return SVGParser.parse(new ByteArrayInputStream(svgData.getBytes()), searchColor, replaceColor, false);
+    public static SVG getSVGFromString(String svgData, int searchColor, int replaceColor)
+        throws SVGParseException {
+        return SVGParser
+            .parse(new ByteArrayInputStream(svgData.getBytes()), searchColor, replaceColor, false);
     }
 
     /**
      * Parse SVG data from an Android application resource.
      *
-     * @param resources    the Android context
-     * @param resId        the ID of the raw resource SVG.
-     * @param searchColor  the color in the SVG to replace.
+     * @param resources the Android context
+     * @param resId the ID of the raw resource SVG.
+     * @param searchColor the color in the SVG to replace.
      * @param replaceColor the color with which to replace the search color.
+     *
      * @return the parsed SVG.
+     *
      * @throws SVGParseException if there is an error while parsing.
      */
-    public static SVG getSVGFromResource(Resources resources, int resId, int searchColor, int replaceColor) throws SVGParseException {
+    public static SVG getSVGFromResource(Resources resources, int resId, int searchColor,
+        int replaceColor) throws SVGParseException {
         return SVGParser.parse(resources.openRawResource(resId), searchColor, replaceColor, false);
     }
 
     /**
      * Parse SVG data from an Android application asset.
      *
-     * @param assetMngr    the Android asset manager.
-     * @param svgPath      the path to the SVG file in the application's assets.
-     * @param searchColor  the color in the SVG to replace.
+     * @param assetMngr the Android asset manager.
+     * @param svgPath the path to the SVG file in the application's assets.
+     * @param searchColor the color in the SVG to replace.
      * @param replaceColor the color with which to replace the search color.
+     *
      * @return the parsed SVG.
+     *
      * @throws SVGParseException if there is an error while parsing.
-     * @throws IOException       if there was a problem reading the file.
+     * @throws IOException if there was a problem reading the file.
      */
-    public static SVG getSVGFromAsset(AssetManager assetMngr, String svgPath, int searchColor, int replaceColor) throws SVGParseException, IOException {
+    public static SVG getSVGFromAsset(AssetManager assetMngr, String svgPath, int searchColor,
+        int replaceColor) throws SVGParseException, IOException {
         InputStream inputStream = assetMngr.open(svgPath);
         SVG svg = getSVGFromInputStream(inputStream, searchColor, replaceColor);
         inputStream.close();
@@ -186,9 +210,10 @@ public class SVGParser {
         return doPath(pathString);
     }
 
-    private static SVG parse(InputStream in, Integer searchColor, Integer replaceColor, boolean whiteMode,
-                             int targetWidth, int targetHeight) throws SVGParseException {
-//        Util.debug("Parsing SVG...");
+    private static SVG parse(InputStream in, Integer searchColor, Integer replaceColor,
+        boolean whiteMode,
+        int targetWidth, int targetHeight) throws SVGParseException {
+        //        Util.debug("Parsing SVG...");
         try {
             long start = System.currentTimeMillis();
             SAXParserFactory spf = SAXParserFactory.newInstance();
@@ -200,7 +225,7 @@ public class SVGParser {
             handler.setWhiteMode(whiteMode);
             xr.setContentHandler(handler);
             xr.parse(new InputSource(in));
-//        Util.debug("Parsing complete in " + (System.currentTimeMillis() - start) + " millis.");
+            //        Util.debug("Parsing complete in " + (System.currentTimeMillis() - start) + " millis.");
             SVG result = new SVG(picture, handler.bounds);
             // Skip bounds if it was an empty pic
             if (!Float.isInfinite(handler.limits.top)) {
@@ -212,7 +237,8 @@ public class SVGParser {
         }
     }
 
-    private static SVG parse(InputStream in, Integer searchColor, Integer replaceColor, boolean whiteMode) throws SVGParseException {
+    private static SVG parse(InputStream in, Integer searchColor, Integer replaceColor,
+        boolean whiteMode) throws SVGParseException {
         return parse(in, searchColor, replaceColor, whiteMode, 0, 0);
     }
 
@@ -303,18 +329,18 @@ public class SVGParser {
             if (np.numbers.size() == 6) {
                 Matrix matrix = new Matrix();
                 matrix.setValues(new float[]{
-                        // Row 1
-                        np.numbers.get(0),
-                        np.numbers.get(2),
-                        np.numbers.get(4),
-                        // Row 2
-                        np.numbers.get(1),
-                        np.numbers.get(3),
-                        np.numbers.get(5),
-                        // Row 3
-                        0,
-                        0,
-                        1,
+                    // Row 1
+                    np.numbers.get(0),
+                    np.numbers.get(2),
+                    np.numbers.get(4),
+                    // Row 2
+                    np.numbers.get(1),
+                    np.numbers.get(3),
+                    np.numbers.get(5),
+                    // Row 3
+                    0,
+                    0,
+                    1,
                 });
                 return matrix;
             }
@@ -583,7 +609,8 @@ public class SVGParser {
         return p;
     }
 
-    private static void drawArc(Path p, float lastX, float lastY, float x, float y, float rx, float ry, float theta, int largeArc, int sweepArc) {
+    private static void drawArc(Path p, float lastX, float lastY, float x, float y, float rx,
+        float ry, float theta, int largeArc, int sweepArc) {
         // todo - not implemented yet, may be very hard to do using Android drawing facilities.
     }
 
@@ -619,7 +646,7 @@ public class SVGParser {
             if (v.endsWith("px")) {
                 v = v.substring(0, v.length() - 2);
             }
-//            Log.d(TAG, "Float parsing '" + name + "=" + v + "'");
+            //            Log.d(TAG, "Float parsing '" + name + "=" + v + "'");
             return Float.parseFloat(v);
         }
     }
@@ -655,7 +682,6 @@ public class SVGParser {
         public float getNumber(int index) {
             return numbers.get(index);
         }
-
     }
 
     private static class Gradient {
@@ -786,7 +812,9 @@ public class SVGParser {
         // Scratch rect (so we aren't constantly making new ones)
         RectF rect = new RectF();
         RectF bounds = null;
-        RectF limits = new RectF(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY);
+        RectF limits =
+            new RectF(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY,
+                Float.NEGATIVE_INFINITY);
 
         Integer searchColor = null;
         Integer replaceColor = null;
@@ -1008,25 +1036,28 @@ public class SVGParser {
          * If target width and height are set for the canvas
          * scale output picture uniformally using by the smallest
          * dimention.
+         *
          * @param imageWidth Width of the SVG image.
          * @param imageHeight Height of the SVG image.
+         *
          * @return
          */
         private Canvas beginRecordingPicture(int imageWidth, int imageHeight) {
-            if(targetWidth == 0 || targetHeight == 0) {
-               return picture.beginRecording(imageWidth, imageHeight);
+            if (targetWidth == 0 || targetHeight == 0) {
+                return picture.beginRecording(imageWidth, imageHeight);
             } else {
-               Canvas canvas = picture.beginRecording(targetWidth, targetHeight);
-               prepareScaledCanvas(canvas, imageWidth, imageHeight);
-               return canvas;
+                Canvas canvas = picture.beginRecording(targetWidth, targetHeight);
+                prepareScaledCanvas(canvas, imageWidth, imageHeight);
+                return canvas;
             }
         }
 
-        private static final void prepareScaledCanvas(Canvas canvas, float imageWidth, float imageHeight) {
+        private static final void prepareScaledCanvas(Canvas canvas, float imageWidth,
+            float imageHeight) {
             final float scaleX = canvas.getWidth() / imageWidth;
             final float scaleY = canvas.getHeight() / imageHeight;
 
-            if(scaleX > scaleY) {
+            if (scaleX > scaleY) {
                 final float dx = ((scaleX - scaleY) * imageWidth) / 2;
                 canvas.translate(dx, 0);
                 canvas.scale(scaleY, scaleY);
@@ -1037,9 +1068,9 @@ public class SVGParser {
             }
         }
 
-
         @Override
-        public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
+        public void startElement(String namespaceURI, String localName, String qName,
+            Attributes atts) throws SAXException {
             // Reset paint opacity
             paint.setAlpha(255);
             // Ignore everything but rectangles in bounds mode
@@ -1170,7 +1201,8 @@ public class SVGParser {
                 if (centerX != null && centerY != null && radiusX != null && radiusY != null) {
                     pushTransform(atts);
                     Properties props = new Properties(atts);
-                    rect.set(centerX - radiusX, centerY - radiusY, centerX + radiusX, centerY + radiusY);
+                    rect.set(centerX - radiusX, centerY - radiusY, centerX + radiusX,
+                        centerY + radiusY);
                     if (doFill(props, gradientMap)) {
                         doLimits(centerX - radiusX, centerY - radiusY);
                         doLimits(centerX + radiusX, centerY + radiusY);
@@ -1233,7 +1265,7 @@ public class SVGParser {
 
         @Override
         public void endElement(String namespaceURI, String localName, String qName)
-                throws SAXException {
+            throws SAXException {
             if (localName.equals("svg")) {
                 picture.endRecording();
             } else if (localName.equals("linearGradient")) {
@@ -1255,7 +1287,9 @@ public class SVGParser {
                     if (colors.length == 0) {
                         Log.d("BAD", "BAD");
                     }
-                    LinearGradient g = new LinearGradient(gradient.x1, gradient.y1, gradient.x2, gradient.y2, colors, positions, Shader.TileMode.CLAMP);
+                    LinearGradient g =
+                        new LinearGradient(gradient.x1, gradient.y1, gradient.x2, gradient.y2,
+                            colors, positions, Shader.TileMode.CLAMP);
                     if (gradient.matrix != null) {
                         g.setLocalMatrix(gradient.matrix);
                     }
@@ -1284,7 +1318,9 @@ public class SVGParser {
                             gradient = parent.createChild(gradient);
                         }
                     }
-                    RadialGradient g = new RadialGradient(gradient.x, gradient.y, gradient.radius, colors, positions, Shader.TileMode.CLAMP);
+                    RadialGradient g =
+                        new RadialGradient(gradient.x, gradient.y, gradient.radius, colors,
+                            positions, Shader.TileMode.CLAMP);
                     if (gradient.matrix != null) {
                         g.setLocalMatrix(gradient.matrix);
                     }

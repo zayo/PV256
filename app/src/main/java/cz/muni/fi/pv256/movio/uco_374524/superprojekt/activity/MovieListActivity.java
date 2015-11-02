@@ -3,7 +3,6 @@ package cz.muni.fi.pv256.movio.uco_374524.superprojekt.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +12,7 @@ import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.data.DataProvider;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.fragment.MovieDetailFragment;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.fragment.MoviesListFragment;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.Log;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.RecyclerItemClickListener;
 
 public class MovieListActivity extends AppCompatActivity {

@@ -2,7 +2,6 @@ package cz.muni.fi.pv256.movio.uco_374524.superprojekt.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Actor;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.Log;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.view.SvgMaskedImageView;
 
 /**
