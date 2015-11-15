@@ -7,13 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.tonicartos.superslim.GridSLM;
 import com.tonicartos.superslim.LayoutManager;
 
 import java.util.ArrayList;
 
-import cz.muni.fi.pv256.movio.uco_374524.superprojekt.App;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
 
@@ -33,7 +32,6 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Hold
     mItems = data;
     grid_column_width = column_width;
     grid_column_count = column_count;
-    Picasso.with(App.get()).setIndicatorsEnabled(true);
   }
 
   @Override
@@ -100,7 +98,7 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Hold
 
     @Override
     public void bindItem(Movie item) {
-      Picasso.with(mImageView.getContext())
+      Glide.with(mImageView.getContext())
         .load("http://image.tmdb.org/t/p/w780" + item.coverPath)
         .error(R.drawable.no_poster)
         .placeholder(R.drawable.no_poster)

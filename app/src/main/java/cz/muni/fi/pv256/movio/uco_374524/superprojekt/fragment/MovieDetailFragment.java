@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -72,13 +72,13 @@ public class MovieDetailFragment extends Fragment {
       return;
     }
 
-    Picasso.with(mTitleBackgroundImage.getContext())
+    Glide.with(mTitleBackgroundImage.getContext())
       .load("http://image.tmdb.org/t/p/w1280" + movie.backdropPath)
       .error(R.drawable.no_poster)
       .placeholder(R.drawable.no_poster)
       .into(mTitleBackgroundImage);
 
-    Picasso.with(mTitleImage.getContext())
+    Glide.with(mTitleImage.getContext())
       .load("http://image.tmdb.org/t/p/w780" + movie.coverPath)
       .error(R.drawable.no_poster)
       .placeholder(R.drawable.no_poster)
