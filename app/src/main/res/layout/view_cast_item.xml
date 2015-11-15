@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="horizontal"
+  >
+  <cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.view.SvgMaskedImageView
+    android:id="@+id/actor_image"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:layout_margin="@dimen/padmar_small"
+    android:scaleType="centerCrop"
+    android:adjustViewBounds="true"
+    android:src="@drawable/no_poster"
+    android:layout_gravity="center"
+    mask="@raw/shape_circle"
+    />
+  <TextView
+    style="@style/Text.Dark"
+    android:id="@+id/actor_name"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    >
-    <cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.view.SvgMaskedImageView
-        android:id="@+id/actor_image"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="@dimen/padmar_small"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:src="@drawable/test"
-        android:layout_gravity="center"
-        mask="@raw/shape_circle"
-        />
-    <TextView
-        style="@style/Text.Dark"
-        android:id="@+id/actor_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Liam Neeson"
-        android:padding="@dimen/padmar_normal"
-        android:layout_gravity="center"
-        />
+    android:text="Liam Neeson"
+    android:padding="@dimen/padmar_normal"
+    android:layout_gravity="center"
+    />
 </LinearLayout>

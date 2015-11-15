@@ -12,14 +12,14 @@ import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
  */
 public class MovieDetailActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_detail);
 
-        final MovieDetailFragment mdf =
-            (MovieDetailFragment) getFragmentManager().findFragmentById(R.id.details_frag);
+    final MovieDetailFragment mdf =
+      (MovieDetailFragment) getFragmentManager().findFragmentById(R.id.details_frag);
 
-        mdf.setData((Movie) getIntent().getExtras().getParcelable("movie"));
-    }
+    mdf.setData((Movie) getIntent().getExtras().getParcelable("movie"));
+  }
 }

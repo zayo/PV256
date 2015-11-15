@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="SvgMaskedImageView">
+  <declare-styleable name="SvgMaskedImageView">
 
-        <attr name="mask" format="reference" />
+    <attr name="mask" format="reference"/>
 
-    </declare-styleable>
+  </declare-styleable>
 
 </resources>

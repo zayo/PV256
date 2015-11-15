@@ -8,36 +8,36 @@ import android.os.Parcelable;
  */
 public class Actor implements Parcelable {
 
-    public String mImage;
-    public String mName;
+  public String mImage;
+  public String mName;
 
-    public Actor(String image, String name) {
-        mImage = image;
-        mName = name;
-    }
+  public Actor(String image, String name) {
+    mImage = image;
+    mName = name;
+  }
 
-    public Actor(Parcel in) {
-        mImage = in.readString();
-        mName = in.readString();
-    }
+  public Actor(Parcel in) {
+    mImage = in.readString();
+    mName = in.readString();
+  }
 
-    public int describeContents() {
-        return 0;
-    }
+  public int describeContents() {
+    return 0;
+  }
 
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mImage);
-        dest.writeString(mName);
-    }
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(mImage);
+    dest.writeString(mName);
+  }
 
-    public static final Creator<Actor> CREATOR =
-        new Creator<Actor>() {
-            public Actor createFromParcel(Parcel in) {
-                return new Actor(in);
-            }
+  public static final Creator<Actor> CREATOR =
+    new Creator<Actor>() {
+      public Actor createFromParcel(Parcel in) {
+        return new Actor(in);
+      }
 
-            public Actor[] newArray(int size) {
-                return new Actor[size];
-            }
-        };
+      public Actor[] newArray(int size) {
+        return new Actor[size];
+      }
+    };
 }
