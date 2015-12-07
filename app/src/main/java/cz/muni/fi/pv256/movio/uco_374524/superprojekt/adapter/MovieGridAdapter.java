@@ -99,9 +99,9 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Hold
     @Override
     public void bindItem(Movie item) {
       Glide.with(mImageView.getContext())
-        .load("http://image.tmdb.org/t/p/w780" + item.coverPath)
-        .error(R.drawable.no_poster)
-        .placeholder(R.drawable.no_poster)
+        .load("http://image.tmdb.org/t/p/w500" + item.coverPath)
+        .error(R.drawable.im_no_poster)
+        .placeholder(R.drawable.im_placeholder_poster)
         .into(mImageView);
     }
   }

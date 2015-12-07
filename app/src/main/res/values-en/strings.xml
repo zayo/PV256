@@ -5,4 +5,7 @@
   <string name="empty_list">No Data Available</string>
   <string name="no_connection">No Connection Available</string>
   <string name="select_movie_first">First Select Movie</string>
+  <string name="category1">This week opening</string>
+  <string name="category2">This month opening</string>
+  <string name="category3">This year opening</string>
 </resources>

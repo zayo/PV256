@@ -3,38 +3,37 @@ package cz.muni.fi.pv256.movio.uco_374524.superprojekt.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.ArrayList;
+import com.squareup.moshi.Json;
 
 /**
  * Created by prasniatko on 18/10/15.
  */
 public class Movie implements Parcelable {
 
-  @SerializedName("id")
+  @Json(name = "id")
   public long id;
 
-  @SerializedName("release_date")
+  @Json(name = "release_date")
   public String releaseDate;
 
-  @SerializedName("backdrop_path")
+  @Json(name = "backdrop_path")
   public String backdropPath;
 
-  @SerializedName("poster_path")
+  @Json(name = "poster_path")
   public String coverPath;
 
-  @SerializedName("title")
+  @Json(name = "title")
   public String title;
 
-  @SerializedName("original_title")
+  @Json(name = "original_title")
   public String originalTitle;
 
-  @SerializedName("overview")
+  @Json(name = "overview")
   public String overview;
 
+
   public boolean isHeader = false;
-  public ArrayList<Actor> actors = new ArrayList<>();
+  //public ArrayList<Actor> actors = new ArrayList<>();
 
   public Movie() {
   }
@@ -44,9 +43,9 @@ public class Movie implements Parcelable {
     this.isHeader = isHeader;
   }
 
-  public void setActors(ArrayList<Actor> actors) {
+  /*public void setActors(ArrayList<Actor> actors) {
     this.actors.addAll(actors);
-  }
+  }*/
 
   public Movie(Parcel in) {
     id = in.readLong();
@@ -57,7 +56,7 @@ public class Movie implements Parcelable {
     originalTitle = in.readString();
     overview = in.readString();
     isHeader = in.readByte() != 0;
-    actors = in.createTypedArrayList(Actor.CREATOR);
+    //actors = in.createTypedArrayList(Actor.CREATOR);
   }
 
   public int describeContents() {
@@ -73,7 +72,7 @@ public class Movie implements Parcelable {
     dest.writeString(originalTitle);
     dest.writeString(overview);
     dest.writeByte((byte) (isHeader ? 1 : 0));
-    dest.writeTypedList(actors);
+    //dest.writeTypedList(actors);
   }
 
   public static final Parcelable.Creator<Movie> CREATOR =

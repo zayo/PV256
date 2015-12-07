@@ -4,7 +4,7 @@
   android:id="@+id/movie_image"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:src="@drawable/no_poster"
+  android:src="@drawable/im_no_poster"
   android:background="@color/transparent"
   android:contentDescription="@null"
   android:scaleType="centerCrop"

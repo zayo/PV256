@@ -37,6 +37,10 @@
         android:value=".activity.MovieListActivity"
         />
     </activity>
+
+    <service
+      android:name=".connection.service.UpdateService"
+      android:exported="false"/>
   </application>
 
 </manifest>

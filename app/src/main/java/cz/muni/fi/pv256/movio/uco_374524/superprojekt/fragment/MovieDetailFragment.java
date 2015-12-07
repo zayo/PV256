@@ -11,13 +11,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
-
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
-import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Actor;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.Log;
-import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.view.SvgMaskedImageView;
 
 /**
  * Created by prasniatko on 26/10/15.
@@ -74,14 +70,14 @@ public class MovieDetailFragment extends Fragment {
 
     Glide.with(mTitleBackgroundImage.getContext())
       .load("http://image.tmdb.org/t/p/w1280" + movie.backdropPath)
-      .error(R.drawable.no_poster)
-      .placeholder(R.drawable.no_poster)
+      .error(R.drawable.im_no_back)
+      .placeholder(R.drawable.im_placeholder_back)
       .into(mTitleBackgroundImage);
 
     Glide.with(mTitleImage.getContext())
-      .load("http://image.tmdb.org/t/p/w780" + movie.coverPath)
-      .error(R.drawable.no_poster)
-      .placeholder(R.drawable.no_poster)
+      .load("http://image.tmdb.org/t/p/w500" + movie.coverPath)
+      .error(R.drawable.im_no_poster)
+      .placeholder(R.drawable.im_placeholder_poster)
       .into(mTitleImage);
 
     mTitleTranslated.setText(movie.title);
@@ -90,16 +86,16 @@ public class MovieDetailFragment extends Fragment {
     mYear.setText(movie.releaseDate.substring(0, 4));
 
     mCastContainer.removeAllViews();
-    ArrayList<Actor> actors = movie.actors;
+    /*ArrayList<Actor> actors = movie.actors;
     for (int i = 0, actorsSize = actors.size(); i < actorsSize; i++) {
       Actor a = actors.get(i);
       View item = mLayoutInflater.inflate(R.layout.view_cast_item, mCastContainer, false);
       TextView name = (TextView) item.findViewById(R.id.actor_name);
       SvgMaskedImageView icon = (SvgMaskedImageView) item.findViewById(R.id.actor_image);
       name.setText(a.mName);
-      icon.setImageResource(R.drawable.no_poster);
+      icon.setImageResource(R.drawable.im_no_poster);
       mCastContainer.addView(item);
-    }
+    }*/
 
     mEmptyView.setVisibility(View.INVISIBLE);
     mContentView.setVisibility(View.VISIBLE);

@@ -38,7 +38,7 @@ public class DiscoverHelper {
       }
       url = base;
       params.put("api_key", api_key);
-      params.put("sort_by", "avg_rating.desc");
+      params.put("sort_by", "popularity.desc");
     }
 
     public Builder setDateFrom(String dateFrom) {

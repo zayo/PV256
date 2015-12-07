@@ -18,10 +18,11 @@ import java.util.ArrayList;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.adapter.MovieGridAdapter;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
-import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.ItemDecoration;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.GridItemDecorator;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.RecyclerItemClickListener;
 
 import static android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import static android.view.View.VISIBLE;
 
 /**
  * Created by prasniatko on 26/10/15.
@@ -50,7 +51,7 @@ public class MoviesListFragment extends Fragment {
     mRecyclerView = (RecyclerView) root.findViewById(R.id.movies_grid_view);
     mRecyclerView.setLayoutManager(new LayoutManager(getActivity()));
     mRecyclerView.addItemDecoration(
-      new ItemDecoration(getResources().getDimensionPixelSize(R.dimen.grid_spacing),
+      new GridItemDecorator(getResources().getDimensionPixelSize(R.dimen.grid_spacing),
         COLUMN_COUNT));
 
     mSwipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe_refresh);
@@ -91,7 +92,11 @@ public class MoviesListFragment extends Fragment {
   }
 
   public void showLoading() {
-    setLoading(true);
+    if (mRecyclerView.getVisibility() == VISIBLE && mRecyclerView.getAdapter().getItemCount() > 0) {
+      mSwipeRefreshLayout.setRefreshing(true);
+    } else {
+      setLoading(true);
+    }
   }
 
   private void setLoading(boolean isVisible) {

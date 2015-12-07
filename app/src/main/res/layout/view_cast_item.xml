@@ -12,7 +12,7 @@
     android:layout_margin="@dimen/padmar_small"
     android:scaleType="centerCrop"
     android:adjustViewBounds="true"
-    android:src="@drawable/no_poster"
+    android:src="@drawable/im_no_poster"
     android:layout_gravity="center"
     mask="@raw/shape_circle"
     />

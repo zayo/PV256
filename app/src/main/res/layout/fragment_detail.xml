@@ -39,7 +39,7 @@
               android:layout_weight="1"
               android:scaleType="centerCrop"
               android:contentDescription="@null"
-              android:src="@drawable/no_poster"
+              android:src="@drawable/im_no_poster"
               />
             <View
               android:id="@+id/bg_base_info"
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="11"
-                android:src="@drawable/no_poster"
+                android:src="@drawable/im_no_poster"
                 android:adjustViewBounds="true"
                 android:scaleType="fitStart"
                 android:contentDescription="@null"

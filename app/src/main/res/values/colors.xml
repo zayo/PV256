@@ -14,6 +14,7 @@
   <color name="gray_light">#55000000</color>
   <color name="black_light">#dd000000</color>
 
+  <color name="gray_separator">#22000000</color>
 
   <integer-array name="gplus_colors">
     <item>@color/gplus_color_1</item>

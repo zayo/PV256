@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+  >
+  <group
+    android:checkableBehavior="none"
+    >
+    <item
+      android:id="@+id/test"
+      android:title="Zobrazeni"
+      >
+      <menu>
+        <group
+          android:checkableBehavior="single"
+          >
+          <item
+            android:id="@+id/discover"
+            android:title="Discover"
+            android:checkable="true"
+            />
+          <item
+            android:id="@+id/saved"
+            android:title="Saved"
+            android:checkable="true"
+            />
+        </group>
+      </menu>
+    </item>
+
+    <item
+      android:title="Filtrovat zanry">
+      <menu>
+        <group
+          android:checkableBehavior="all"
+          >
+          <item
+            android:id="@+id/test1"
+            android:checkable="true"
+            android:title="test1"
+            app:showAsAction="always"
+            android:actionLayout="@layout/menu_checkable_item"
+            />
+
+          <item
+            android:id="@+id/test2"
+            android:checkable="true"
+            android:title="test2"
+            app:showAsAction="always"
+            android:actionLayout="@layout/menu_checkable_item"
+            />
+
+          <item
+            android:id="@+id/test3"
+            android:checkable="true"
+            android:title="test3"
+            app:showAsAction="always"
+            android:actionLayout="@layout/menu_checkable_item"
+            />
+
+          <item
+            android:id="@+id/test4"
+            android:checkable="true"
+            android:title="test4"
+            app:showAsAction="always"
+            android:actionLayout="@layout/menu_checkable_item"
+            />
+        </group>
+      </menu>
+    </item>
+  </group>
+</menu>

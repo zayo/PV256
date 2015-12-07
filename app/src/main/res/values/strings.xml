@@ -1,8 +1,13 @@
 <resources>
-  <string name="app_name">SuperProjekt</string>
+  <string name="app_name" translatable="false">SuperProjekt</string>
   <string name="action_settings">Settings</string>
   <string name="activity_detail">Movie Detail</string>
   <string name="empty_list">No Data Available</string>
   <string name="no_connection">No Connection Available</string>
   <string name="select_movie_first">First Select Movie</string>
+  <string name="drawer_close" translatable="false">Close</string>
+  <string name="drawer_open" translatable="false">Open</string>
+  <string name="category1">This week opening</string>
+  <string name="category2">This month opening</string>
+  <string name="category3">This year opening</string>
 </resources>
