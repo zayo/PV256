@@ -11,9 +11,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.activity.BaseActivity;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Cast;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.Log;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.view.SvgMaskedImageView;
 
 /**
  * Created by prasniatko on 26/10/15.
@@ -60,13 +65,15 @@ public class MovieDetailFragment extends Fragment {
     return root;
   }
 
-  public void setData(Movie movie) {
-    Log.d(TAG, "setData() called with: " + "movie = [" + movie + "]");
+  public void setMovie(Movie movie) {
+    Log.d(TAG, "setMovie() called with: " + "movie = [" + movie + "]");
     if (movie == null) {
       mContentView.setVisibility(View.INVISIBLE);
       mEmptyView.setVisibility(View.VISIBLE);
       return;
     }
+
+    ((BaseActivity)getActivity()).requestCast(movie.id);
 
     Glide.with(mTitleBackgroundImage.getContext())
       .load("http://image.tmdb.org/t/p/w1280" + movie.backdropPath)
@@ -86,19 +93,29 @@ public class MovieDetailFragment extends Fragment {
     mYear.setText(movie.releaseDate.substring(0, 4));
 
     mCastContainer.removeAllViews();
-    /*ArrayList<Actor> actors = movie.actors;
-    for (int i = 0, actorsSize = actors.size(); i < actorsSize; i++) {
-      Actor a = actors.get(i);
-      View item = mLayoutInflater.inflate(R.layout.view_cast_item, mCastContainer, false);
-      TextView name = (TextView) item.findViewById(R.id.actor_name);
-      SvgMaskedImageView icon = (SvgMaskedImageView) item.findViewById(R.id.actor_image);
-      name.setText(a.mName);
-      icon.setImageResource(R.drawable.im_no_poster);
-      mCastContainer.addView(item);
-    }*/
 
     mEmptyView.setVisibility(View.INVISIBLE);
     mContentView.setVisibility(View.VISIBLE);
+  }
+
+  public void setCast(ArrayList<Cast> data){
+
+    mCastContainer.removeAllViews();
+    for (int i = 0, actorsSize = data.size(); i < actorsSize; i++) {
+      Cast person = data.get(i);
+      View item = mLayoutInflater.inflate(R.layout.view_cast_item, mCastContainer, false);
+      TextView name = (TextView) item.findViewById(R.id.actor_name);
+
+      SvgMaskedImageView icon = (SvgMaskedImageView) item.findViewById(R.id.actor_image);
+      Glide.with(icon.getContext())
+        .load("http://image.tmdb.org/t/p/w185" + person.image)
+        .error(R.drawable.im_no_back)
+        .placeholder(R.drawable.im_placeholder_poster)
+        .into(icon);
+      name.setText(person.name);
+
+      mCastContainer.addView(item);
+    }
   }
 
   public boolean isFragmentUIActive() {

@@ -1,9 +1,12 @@
 package cz.muni.fi.pv256.movio.uco_374524.superprojekt.activity;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,6 +23,9 @@ import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.adapter.GenreFilterAdapter;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.DataProvider;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.NetworkStateChangedReceiver;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.service.UpdateCastEvent;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.service.UpdateListEvent;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.service.UpdateService;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.fragment.MovieDetailFragment;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.fragment.MoviesListFragment;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Genre;
@@ -27,17 +33,17 @@ import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.GenresWrapper;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.Log;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.RecyclerItemClickListener;
-import cz.muni.fi.pv256.movio.uco_374524.superprojekt.viewmodel.IMovie;
-import cz.muni.fi.pv256.movio.uco_374524.superprojekt.viewmodel.MoviesProvider;
-import eu.inloop.viewmodel.base.ViewModelBaseActivity;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class MovieListActivity extends ViewModelBaseActivity<IMovie, MoviesProvider>
-  implements IMovie, RecyclerItemClickListener.OnItemClickListener,
-  SwipeRefreshLayout.OnRefreshListener, NetworkStateChangedReceiver.NetworkStateChanged,
-  GenreFilterAdapter.OnSelectionChanged {
+public class MovieListActivity
+  extends BaseActivity
+  implements
+  RecyclerItemClickListener.OnItemClickListener,
+  SwipeRefreshLayout.OnRefreshListener,
+  NetworkStateChangedReceiver.NetworkStateChanged,
+  GenreFilterAdapter.OnSelectionChanged{
 
   private static final String TAG = ".MovieListActivity";
 
@@ -67,6 +73,24 @@ public class MovieListActivity extends ViewModelBaseActivity<IMovie, MoviesProvi
 
   private ArrayList<Movie> mData;
 
+  @SuppressWarnings("unused")
+  public void onEvent(final UpdateListEvent event) {
+    if (event.getData() == null) {
+      showNotification();
+    }
+    setData(event.getData());
+  }
+
+  @SuppressWarnings("unused")
+  public void onEvent(final UpdateCastEvent event) {
+    if (event.getData() == null) {
+      showNotification();
+    }
+    if (mDetailFragment != null) {
+      mDetailFragment.setCast(event.getData());
+    }
+  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -91,7 +115,7 @@ public class MovieListActivity extends ViewModelBaseActivity<IMovie, MoviesProvi
             if (mListFragment != null) {
               mListFragment.showLoading();
             }
-            getViewModel().requestData(mGenresAdapter.getCheckedIds());
+            requestList(mGenresAdapter.getCheckedIds());
           }
         }
 
@@ -130,8 +154,6 @@ public class MovieListActivity extends ViewModelBaseActivity<IMovie, MoviesProvi
     //calling sync state is necessay or else your hamburger icon wont show up
     actionBarDrawerToggle.syncState();
 
-    setModelView(this);
-
     mListFragment =
       (MoviesListFragment) getFragmentManager().findFragmentById(R.id.list_frag);
     mDetailFragment =
@@ -145,7 +167,7 @@ public class MovieListActivity extends ViewModelBaseActivity<IMovie, MoviesProvi
 
     mConnected = NetworkStateChangedReceiver.isNetworkAvailable(this);
 
-    getViewModel().requestData(mGenresAdapter.getCheckedIds());
+    requestList(mGenresAdapter.getCheckedIds());
     if (!mConnected) {
       Toast.makeText(this, "No internet connection, data could be inaccurate.", Toast.LENGTH_LONG)
         .show();
@@ -159,15 +181,9 @@ public class MovieListActivity extends ViewModelBaseActivity<IMovie, MoviesProvi
     mGenresCheckboxAll.setOnCheckedChangeListener(mOnCheckedChangeListener);
   }
 
-  @Override
-  public Class<MoviesProvider> getViewModelClass() {
-    return MoviesProvider.class;
-  }
-
-  @Override
   public void setData(ArrayList<Movie> data) {
     Log.d(TAG,
-      "setData() called with: " + "data = [" + data + "]");
+      "setMovie() called with: " + "data = [" + data + "]");
     if (mListFragment != null) {
       mData = data;
       mListFragment.setData(mData);
@@ -178,7 +194,7 @@ public class MovieListActivity extends ViewModelBaseActivity<IMovie, MoviesProvi
   public void onRefresh() {
     if (mConnected) {
       //noinspection ConstantConditions
-      getViewModel().requestData(mGenresAdapter.getCheckedIds());
+      requestList(mGenresAdapter.getCheckedIds());
     } else {
       Toast.makeText(this, "No internet connection, data could be inaccurate.", Toast.LENGTH_LONG)
         .show();
@@ -195,7 +211,7 @@ public class MovieListActivity extends ViewModelBaseActivity<IMovie, MoviesProvi
       intent.putExtra("movie", mData.get(position));
       startActivity(intent);
     } else {
-      mDetailFragment.setData(mData.get(position));
+      mDetailFragment.setMovie(mData.get(position));
     }
   }
 
@@ -221,11 +237,43 @@ public class MovieListActivity extends ViewModelBaseActivity<IMovie, MoviesProvi
     super.onPause();
     Log.d(TAG, "onPause() called with: " + "");
     unregisterReceiver(mNetworkStateChangedReceiver);
-    getViewModel().cancelLoading();
+    cancelLoading();
+  }
+
+  public void requestList(String genres) {
+    Intent intent = new Intent(Intent.ACTION_SYNC, null, this, UpdateService.class);
+    intent.putExtra("action", "list");
+    intent.putExtra("genres", genres);
+    startService(intent);
+  }
+
+  @Override
+  public void requestCast(long movie_id) {
+    Intent intent = new Intent(Intent.ACTION_SYNC, null, this, UpdateService.class);
+    intent.putExtra("action", "detail");
+    intent.putExtra("id", movie_id);
+    startService(intent);
+  }
+
+  public void cancelLoading() {
+    DataProvider.get().cancelLoading();
   }
 
   @Override
   public void isConnected(boolean isConnected) {
     mConnected = isConnected;
+  }
+
+  public void showNotification() {
+    NotificationCompat.Builder mBuilder =
+      new NotificationCompat.Builder(this)
+        .setSmallIcon(R.mipmap.ic_launcher)
+        .setContentTitle(getString(R.string.app_name))
+        .setContentText(getString(R.string.no_connection));
+    mBuilder.setAutoCancel(true);
+    NotificationManager mNotificationManager =
+      (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    // mId allows you to update the notification later on.
+    mNotificationManager.notify(0, mBuilder.build());
   }
 }

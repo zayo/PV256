@@ -8,11 +8,14 @@ import com.squareup.okhttp.OkHttpClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.moshi.MoshiConverterFactory;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Cast;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.GenresWrapper;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.MovieCredits;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.MovieWrapper;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.DateUtils;
 import retrofit.Call;
@@ -20,6 +23,7 @@ import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 import retrofit.http.GET;
+import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -31,9 +35,17 @@ public class DataProvider {
     void onDataLoaded(ArrayList<Movie> data);
   }
 
+  public interface CastLoaded {
+    void onCastLoaded(ArrayList<Cast> data);
+  }
+
   public static final String BASE_URL = "https://api.themoviedb.org";
 
   public static final String API_KEY = "d88bb4e2a8849bfcb805364c6f7696ed";
+
+  public static final int CAT_1 = 0;
+  public static final int CAT_2 = 1;
+  public static final int CAT_3 = 2;
 
   private static DataProvider mInstance;
 
@@ -46,7 +58,9 @@ public class DataProvider {
 
   private TheMovieDatabaseService mService;
 
-  private Call<MovieWrapper> mDataRequest;
+  private List<Call<MovieWrapper>> mDataRequest;
+
+  private Call<MovieCredits> mCastRequest;
 
   private DataProvider() {
 
@@ -71,11 +85,16 @@ public class DataProvider {
       .build();
 
     mService = retrofit.create(TheMovieDatabaseService.class);
+
+    mDataRequest = new ArrayList<>(3);
   }
 
   public void cancelLoading() {
-    if (mDataRequest != null) {
-      mDataRequest.cancel();
+    if (!mDataRequest.isEmpty()) {
+      for (int i = 0, size = mDataRequest.size(); i < size; i++) {
+        mDataRequest.get(i).cancel();
+      }
+      mDataRequest.clear();
     }
   }
 
@@ -89,14 +108,16 @@ public class DataProvider {
     long milis_31days = milis_now + DateUtils.getMilis(DateUtils.Type.DAY, 31);
     long milis_365days = milis_now + DateUtils.getMilis(DateUtils.Type.DAY, 365);
 
-    mService.getMovies(
+    mDataRequest.add(CAT_1, mService.getMovies(
       API_KEY,
       "popularity.desc",
       Uri.encode(genreIdString),
       DateUtils.format(DateUtils.DEFAULT_DAY, milis_now),
       DateUtils.format(DateUtils.DEFAULT_DAY, milis_7days),
       Locale.getDefault().getLanguage()
-    ).enqueue(
+    ));
+
+    mDataRequest.get(CAT_1).enqueue(
       new Callback<MovieWrapper>() {
         @Override
         public void onResponse(Response<MovieWrapper> response,
@@ -110,14 +131,16 @@ public class DataProvider {
         }
       });
 
-    mService.getMovies(
+    mDataRequest.add(CAT_2, mService.getMovies(
       API_KEY,
       "popularity.desc",
       Uri.encode(genreIdString),
       DateUtils.format(DateUtils.DEFAULT_DAY, milis_7days),
       DateUtils.format(DateUtils.DEFAULT_DAY, milis_31days),
       Locale.getDefault().getLanguage()
-    ).enqueue(
+    ));
+
+    mDataRequest.get(CAT_2).enqueue(
       new Callback<MovieWrapper>() {
         @Override
         public void onResponse(Response<MovieWrapper> response,
@@ -131,14 +154,16 @@ public class DataProvider {
         }
       });
 
-    mService.getMovies(
+    mDataRequest.add(CAT_3, mService.getMovies(
       API_KEY,
       "popularity.desc",
       Uri.encode(genreIdString),
       DateUtils.format(DateUtils.DEFAULT_DAY, milis_31days),
       DateUtils.format(DateUtils.DEFAULT_DAY, milis_365days),
       Locale.getDefault().getLanguage()
-    ).enqueue(
+    ));
+
+    mDataRequest.get(CAT_3).enqueue(
       new Callback<MovieWrapper>() {
         @Override
         public void onResponse(Response<MovieWrapper> response,
@@ -157,6 +182,24 @@ public class DataProvider {
     mService.getGenres(API_KEY, Locale.getDefault().getLanguage()).enqueue(callback);
   }
 
+  public void loadCast(long movie_id, final CastLoaded listener) {
+    if (mCastRequest != null) {
+      mCastRequest.cancel();
+    }
+    mCastRequest = mService.getCast(movie_id, API_KEY);
+    mCastRequest.enqueue(new Callback<MovieCredits>() {
+      @Override
+      public void onResponse(Response<MovieCredits> response, Retrofit retrofit) {
+        listener.onCastLoaded(new ArrayList<>(response.body().cast));
+      }
+
+      @Override
+      public void onFailure(Throwable t) {
+        listener.onCastLoaded(null);
+      }
+    });
+  }
+
   private interface TheMovieDatabaseService {
 
     @GET("/3/genre/movie/list")
@@ -173,6 +216,12 @@ public class DataProvider {
       @Query("primary_release_date.gte") String dateFrom,
       @Query("primary_release_date.lte") String dateTo,
       @Query("language") String lang
+    );
+
+    @GET("/3/movie/{id}/credits")
+    Call<MovieCredits> getCast(
+      @Path("id") long movie_id,
+      @Query("api_key") String api_key
     );
   }
 }

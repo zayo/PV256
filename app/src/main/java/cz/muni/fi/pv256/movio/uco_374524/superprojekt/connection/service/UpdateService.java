@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.DataProvider;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.NetworkStateChangedReceiver;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Cast;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.Log;
 import de.greenrobot.event.EventBus;
@@ -40,18 +41,37 @@ public class UpdateService extends IntentService {
   @Override
   protected void onHandleIntent(Intent workIntent) {
     Log.d(TAG, "onHandleIntent ");
-    String dataString = workIntent.getStringExtra("genres");
-    DataProvider.get().loadData(dataString, new DataProvider.DataLoaded() {
-      @Override
-      public void onDataLoaded(ArrayList<Movie> data) {
-        mBus.removeAllStickyEvents();
-        if (NetworkStateChangedReceiver.isNetworkAvailable(UpdateService.this)) {
-          mBus.postSticky(new UpdateEvent(data));
-        } else {
-          mBus.postSticky(new UpdateEvent(null));
-        }
-      }
-    });
+    switch (workIntent.getStringExtra("action")){
+      case "list":
+        String dataString = workIntent.getStringExtra("genres");
+        DataProvider.get().loadData(dataString, new DataProvider.DataLoaded() {
+          @Override
+          public void onDataLoaded(ArrayList<Movie> data) {
+            mBus.removeAllStickyEvents();
+            if (NetworkStateChangedReceiver.isNetworkAvailable(UpdateService.this)) {
+              mBus.postSticky(new UpdateListEvent(data));
+            } else {
+              mBus.postSticky(new UpdateListEvent(null));
+            }
+          }
+        });
+        break;
+      case "detail":
+        Long id = workIntent.getLongExtra("id", 0);
+        DataProvider.get().loadCast(id, new DataProvider.CastLoaded() {
+          @Override
+          public void onCastLoaded(ArrayList<Cast> data) {
+            mBus.removeAllStickyEvents();
+            if (NetworkStateChangedReceiver.isNetworkAvailable(UpdateService.this)) {
+              mBus.postSticky(new UpdateCastEvent(data));
+            } else {
+              mBus.postSticky(new UpdateCastEvent(null));
+            }
+          }
+        });
+        break;
+    }
+
   }
 
   /**

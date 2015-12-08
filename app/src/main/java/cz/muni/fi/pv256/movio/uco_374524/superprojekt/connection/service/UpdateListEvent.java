@@ -8,14 +8,14 @@ import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.Log;
 /**
  * Created by prasniatko on 07/12/15.
  */
-public class UpdateEvent {
+public class UpdateListEvent {
 
-  private static final String TAG = ".UpdateEvent";
+  private static final String TAG = ".UpdateListEvent";
 
   private ArrayList<Movie> data;
 
-  public UpdateEvent(ArrayList<Movie> data) {
-    Log.d(TAG, "UpdateEvent ");
+  public UpdateListEvent(ArrayList<Movie> data) {
+    Log.d(TAG, "UpdateListEvent ");
     this.data = data;
   }
 
