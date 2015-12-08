@@ -1,6 +1,7 @@
 package cz.muni.fi.pv256.movio.uco_374524.superprojekt.fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
@@ -17,8 +20,8 @@ import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.activity.BaseActivity;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Cast;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.CircleTransform;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.Log;
-import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.view.SvgMaskedImageView;
 
 /**
  * Created by prasniatko on 26/10/15.
@@ -41,6 +44,9 @@ public class MovieDetailFragment extends Fragment {
 
   private LayoutInflater mLayoutInflater;
 
+  private int width = 0;
+  private int height = 0;
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
@@ -62,6 +68,12 @@ public class MovieDetailFragment extends Fragment {
 
     mCastContainer = (LinearLayout) root.findViewById(R.id.cast_container);
 
+    Context ctx = getActivity();
+    if (ctx != null) {
+      width = ctx.getResources().getDisplayMetrics().widthPixels / 3;
+      height = Math.round(width * 1.41f);
+    }
+
     return root;
   }
 
@@ -73,18 +85,22 @@ public class MovieDetailFragment extends Fragment {
       return;
     }
 
-    ((BaseActivity)getActivity()).requestCast(movie.id);
+    ((BaseActivity) getActivity()).requestCast(movie.id);
 
     Glide.with(mTitleBackgroundImage.getContext())
       .load("http://image.tmdb.org/t/p/w1280" + movie.backdropPath)
       .error(R.drawable.im_no_back)
       .placeholder(R.drawable.im_placeholder_back)
+      .diskCacheStrategy(DiskCacheStrategy.ALL)
+      .skipMemoryCache(false)
       .into(mTitleBackgroundImage);
 
     Glide.with(mTitleImage.getContext())
       .load("http://image.tmdb.org/t/p/w500" + movie.coverPath)
       .error(R.drawable.im_no_poster)
       .placeholder(R.drawable.im_placeholder_poster)
+      .diskCacheStrategy(DiskCacheStrategy.ALL)
+      .skipMemoryCache(false)
       .into(mTitleImage);
 
     mTitleTranslated.setText(movie.title);
@@ -98,21 +114,30 @@ public class MovieDetailFragment extends Fragment {
     mContentView.setVisibility(View.VISIBLE);
   }
 
-  public void setCast(ArrayList<Cast> data){
+  public void setCast(ArrayList<Cast> data) {
 
     mCastContainer.removeAllViews();
     for (int i = 0, actorsSize = data.size(); i < actorsSize; i++) {
-      Cast person = data.get(i);
+      final Cast person = data.get(i);
       View item = mLayoutInflater.inflate(R.layout.view_cast_item, mCastContainer, false);
-      TextView name = (TextView) item.findViewById(R.id.actor_name);
+      final TextView name = (TextView) item.findViewById(R.id.actor_name);
 
-      SvgMaskedImageView icon = (SvgMaskedImageView) item.findViewById(R.id.actor_image);
+      final ImageView icon = (ImageView) item.findViewById(R.id.actor_image);
+      final Context context = getActivity();
       Glide.with(icon.getContext())
         .load("http://image.tmdb.org/t/p/w185" + person.image)
+        .transform(new CircleTransform(context))
         .error(R.drawable.im_no_back)
         .placeholder(R.drawable.im_placeholder_poster)
         .into(icon);
       name.setText(person.name);
+      name.setOnLongClickListener(new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+          Toast.makeText(name.getContext(), person.character, Toast.LENGTH_SHORT).show();
+          return false;
+        }
+      });
 
       mCastContainer.addView(item);
     }

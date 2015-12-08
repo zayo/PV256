@@ -5,16 +5,16 @@
   android:layout_height="wrap_content"
   android:orientation="horizontal"
   >
-  <cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.view.SvgMaskedImageView
+  <ImageView
     android:id="@+id/actor_image"
     android:layout_width="40dp"
     android:layout_height="40dp"
     android:layout_margin="@dimen/padmar_small"
-    android:scaleType="centerCrop"
-    android:adjustViewBounds="true"
-    android:src="@drawable/im_no_poster"
+    android:scaleType="fitXY"
+    android:adjustViewBounds="false"
     android:layout_gravity="center"
-    mask="@raw/shape_circle"
+    android:src="@drawable/im_no_poster"
+    android:contentDescription="@null"
     />
   <TextView
     style="@style/Text.Dark"

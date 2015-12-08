@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.service.UpdateCastEvent;
@@ -26,6 +28,14 @@ public class MovieDetailActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_detail);
 
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+    ActionBar ab = getSupportActionBar();
+    if (ab != null) {
+      ab.setDisplayHomeAsUpEnabled(true);
+      ab.setDisplayShowHomeEnabled(true);
+    }
+
     mMovieDetailFragment =
       (MovieDetailFragment) getFragmentManager().findFragmentById(R.id.details_frag);
 
@@ -37,7 +47,7 @@ public class MovieDetailActivity extends BaseActivity {
     if (event.getData() == null) {
       showNotification();
     }
-    if (mMovieDetailFragment != null){
+    if (mMovieDetailFragment != null) {
       mMovieDetailFragment.setCast(event.getData());
     }
   }
@@ -50,7 +60,7 @@ public class MovieDetailActivity extends BaseActivity {
     startService(intent);
   }
 
-  public void showNotification(){
+  public void showNotification() {
     NotificationCompat.Builder mBuilder =
       new NotificationCompat.Builder(this)
         .setSmallIcon(R.mipmap.ic_launcher)

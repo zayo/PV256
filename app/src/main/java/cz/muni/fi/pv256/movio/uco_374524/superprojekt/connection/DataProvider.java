@@ -190,7 +190,11 @@ public class DataProvider {
     mCastRequest.enqueue(new Callback<MovieCredits>() {
       @Override
       public void onResponse(Response<MovieCredits> response, Retrofit retrofit) {
-        listener.onCastLoaded(new ArrayList<>(response.body().cast));
+        if (response.body().cast.size() > 10) {
+          listener.onCastLoaded(new ArrayList<>(response.body().cast.subList(0, 10)));
+        } else {
+          listener.onCastLoaded(new ArrayList<>(response.body().cast));
+        }
       }
 
       @Override

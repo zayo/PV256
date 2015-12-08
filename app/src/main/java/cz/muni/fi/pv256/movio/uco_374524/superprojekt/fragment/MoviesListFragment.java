@@ -73,7 +73,7 @@ public class MoviesListFragment extends Fragment {
     if (data != null) {
       DisplayMetrics dm = getActivity().getResources().getDisplayMetrics();
       mRecyclerView.setAdapter(
-        new MovieGridAdapter(data, dm.widthPixels / COLUMN_COUNT, COLUMN_COUNT));
+        new MovieGridAdapter(getActivity(), data, dm.widthPixels / COLUMN_COUNT, COLUMN_COUNT));
     }
   }
 

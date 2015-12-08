@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  xmlns:tools="http://schemas.android.com/tools"
   >
 
   <ScrollView
@@ -29,135 +29,82 @@
           >
           <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             >
             <ImageView
               android:id="@+id/movie_background_image"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
+              android:layout_height="220dp"
               android:scaleType="centerCrop"
               android:contentDescription="@null"
-              android:src="@drawable/im_no_poster"
+              android:src="@drawable/im_no_back"
               />
-            <View
-              android:id="@+id/bg_base_info"
-              android:orientation="horizontal"
+            <FrameLayout
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
+              android:layout_height="150dp"
               android:background="?attr/colorPrimary"
-              />
+              >
+              <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/padmar_normal"
+                android:layout_marginLeft="150dp"
+                android:layout_marginStart="150dp"
+                >
+                <cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.view.AutoResizeTextView
+                  style="@style/Text.Light.Big"
+                  android:id="@+id/movie_title"
+                  android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_weight="9"
+                  android:ellipsize="end"
+                  android:text="The Grey"
+                  android:gravity="bottom"
+                  />
+                <cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.view.AutoResizeTextView
+                  style="@style/Text.Light.Small"
+                  android:id="@+id/movie_title_original"
+                  android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_weight="3"
+                  android:text="The Grey"
+                  android:layout_marginTop="@dimen/grid_spacing"
+                  android:maxLines="2"
+                  />
+                <cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.view.AutoResizeTextView
+                  style="@style/Text.Light.Small"
+                  android:id="@+id/movie_year"
+                  android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:layout_weight="2"
+                  android:gravity="bottom|start"
+                  android:layout_gravity="bottom"
+                  android:singleLine="true"
+                  android:text="2011"
+                  />
+              </LinearLayout>
+            </FrameLayout>
           </LinearLayout>
 
-          <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:baselineAligned="false"
-            >
-            <LinearLayout
-              android:orientation="vertical"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              >
-              <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="9"
-                />
-              <ImageView
-                android:id="@+id/movie_image"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="11"
-                android:src="@drawable/im_no_poster"
-                android:adjustViewBounds="true"
-                android:scaleType="fitStart"
-                android:contentDescription="@null"
-                android:layout_marginBottom="@dimen/padmar_normal"
-                android:layout_marginLeft="@dimen/padmar_normal"
-                android:layout_marginStart="@dimen/padmar_normal"
-                android:layout_marginRight="@dimen/padmar_normal"
-                android:layout_marginEnd="@dimen/padmar_normal"
-                />
-            </LinearLayout>
-            <LinearLayout
-              android:orientation="vertical"
-              android:layout_width="wrap_content"
-              android:layout_weight="1"
-              android:layout_height="match_parent"
-              android:weightSum="40"
-              android:paddingRight="@dimen/padmar_normal"
-              android:paddingEnd="@dimen/padmar_normal"
-              android:paddingBottom="@dimen/padmar_normal"
-              >
-              <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="25"
-                />
-              <cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.view.AutoResizeTextView
-                style="@style/Text.Light.Big"
-                android:id="@+id/movie_title"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="9"
-                android:ellipsize="end"
-                android:text="The Grey"
-                android:gravity="bottom"
-                />
-              <cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.view.AutoResizeTextView
-                style="@style/Text.Light.Small"
-                android:id="@+id/movie_title_original"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                android:text="The Grey"
-                android:layout_marginTop="@dimen/grid_spacing"
-                android:maxLines="2"
-                />
-              <cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.view.AutoResizeTextView
-                style="@style/Text.Light.Small"
-                android:id="@+id/movie_year"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:gravity="bottom|start"
-                android:layout_gravity="bottom"
-                android:singleLine="true"
-                android:text="2011"
-                />
-            </LinearLayout>
-          </LinearLayout>
+          <ImageView
+            android:id="@+id/movie_image"
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:src="@drawable/im_no_poster"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:contentDescription="@null"
+            android:layout_margin="@dimen/padmar_normal"
+            android:layout_gravity="bottom|left|start"
+            />
         </FrameLayout>
         <LinearLayout
           android:orientation="vertical"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           >
-          <TextView
-            style="@style/Text.Medium.Small"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cast"
-            android:padding="@dimen/padmar_normal"
-            android:textStyle="bold"
-            />
-          <LinearLayout
-            android:id="@+id/cast_container"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/padmar_normal"
-            android:paddingRight="@dimen/padmar_normal"
-            />
-          <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/gray_light"
-            />
           <TextView
             style="@style/Text.Medium.Small"
             android:layout_width="match_parent"
@@ -175,6 +122,27 @@
             android:layout_height="wrap_content"
             android:text="After their plane crashes in Alaska, six oil workers are led by a skilled huntsman to survival, but a pack of merciless wolves haunts their every step."
             android:padding="@dimen/padmar_normal"
+            />
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray_light"
+            />
+          <TextView
+            style="@style/Text.Medium.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cast"
+            android:padding="@dimen/padmar_normal"
+            android:textStyle="bold"
+            />
+          <LinearLayout
+            android:id="@+id/cast_container"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/padmar_normal"
+            android:paddingRight="@dimen/padmar_normal"
             />
         </LinearLayout>
       </LinearLayout>

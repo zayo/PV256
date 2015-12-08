@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
+  android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   >
-  <fragment
-    class="cz.muni.fi.pv256.movio.uco_374524.superprojekt.fragment.MovieDetailFragment"
-    android:id="@+id/details_frag"
+  <include layout="@layout/toolbar"/>
+  <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:layout="@layout/fragment_detail"
-    />
-</FrameLayout>
+    >
+    <fragment
+      class="cz.muni.fi.pv256.movio.uco_374524.superprojekt.fragment.MovieDetailFragment"
+      android:id="@+id/details_frag"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:layout="@layout/fragment_detail"
+      />
+  </FrameLayout>
+</LinearLayout>
