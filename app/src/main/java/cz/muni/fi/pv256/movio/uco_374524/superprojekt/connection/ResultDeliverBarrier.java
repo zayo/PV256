@@ -1,19 +1,19 @@
 package cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.App;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.HeaderArrayList;
 
 public class ResultDeliverBarrier {
 
   private DataProvider.DataLoaded mListener;
 
-  private ArrayList<Movie> mList1;
-  private ArrayList<Movie> mList2;
-  private ArrayList<Movie> mList3;
+  private HeaderArrayList<Movie> mList1;
+  private HeaderArrayList<Movie> mList2;
+  private HeaderArrayList<Movie> mList3;
 
   private boolean mList1Loaded = false;
   private boolean mList2Loaded = false;
@@ -24,9 +24,9 @@ public class ResultDeliverBarrier {
       throw new IllegalArgumentException("listener == null");
     }
     mListener = listener;
-    mList1 = new ArrayList<>(7);
-    mList2 = new ArrayList<>(7);
-    mList3 = new ArrayList<>(7);
+    mList1 = new HeaderArrayList<>(7);
+    mList2 = new HeaderArrayList<>(7);
+    mList3 = new HeaderArrayList<>(7);
     mList1.add(0, new Movie(App.get().getString(R.string.category1), true));
     mList2.add(0, new Movie(App.get().getString(R.string.category2), true));
     mList3.add(0, new Movie(App.get().getString(R.string.category3), true));
@@ -67,7 +67,8 @@ public class ResultDeliverBarrier {
       return;
     }
 
-    ArrayList<Movie> list = new ArrayList<>(21);
+    HeaderArrayList<Movie> list = new HeaderArrayList<>(21);
+    list.setHeaderEvery(7);
     if (mList1 != null) {
       list.addAll(mList1);
       mList1.clear();

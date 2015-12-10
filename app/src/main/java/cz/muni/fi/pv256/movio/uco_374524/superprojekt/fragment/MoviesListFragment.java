@@ -13,12 +13,11 @@ import android.view.ViewStub;
 
 import com.tonicartos.superslim.LayoutManager;
 
-import java.util.ArrayList;
-
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.adapter.MovieGridAdapter;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.GridItemDecorator;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.HeaderArrayList;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.RecyclerItemClickListener;
 
 import static android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
@@ -63,7 +62,7 @@ public class MoviesListFragment extends Fragment {
     return root;
   }
 
-  public void setData(ArrayList<Movie> data) {
+  public void setData(HeaderArrayList<Movie> data) {
     mSwipeRefreshLayout.setRefreshing(false);
     setLoading(false);
     setNoConnectionViewVisible(data == null);

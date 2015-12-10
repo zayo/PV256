@@ -1,4 +1,4 @@
-package cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.service;
+package cz.muni.fi.pv256.movio.uco_374524.superprojekt.service;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.DataProvider;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.NetworkStateChangedReceiver;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Cast;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.HeaderArrayList;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.Log;
 import de.greenrobot.event.EventBus;
 
@@ -46,7 +47,7 @@ public class UpdateService extends IntentService {
         String dataString = workIntent.getStringExtra("genres");
         DataProvider.get().loadData(dataString, new DataProvider.DataLoaded() {
           @Override
-          public void onDataLoaded(ArrayList<Movie> data) {
+          public void onDataLoaded(HeaderArrayList<Movie> data) {
             mBus.removeAllStickyEvents();
             if (NetworkStateChangedReceiver.isNetworkAvailable(UpdateService.this)) {
               mBus.postSticky(new UpdateListEvent(data));

@@ -9,8 +9,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
-import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.service.UpdateCastEvent;
-import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.service.UpdateService;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.service.UpdateCastEvent;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.service.UpdateService;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.fragment.MovieDetailFragment;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
 

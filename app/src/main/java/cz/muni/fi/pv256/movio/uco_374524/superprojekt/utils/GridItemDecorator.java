@@ -31,15 +31,14 @@ public class GridItemDecorator extends RecyclerView.ItemDecoration {
       return;
     }
 
-    int start_index = layoutParams.getFirstPosition() + 1;
+    int firstAfterHeader = layoutParams.getFirstPosition() + 1;
+    int currentPosition = layoutParams.getViewLayoutPosition();
 
-    // add edge margin only if item edge is not the grid edge
-    int position = layoutParams.getViewLayoutPosition() - start_index;
-    int itemSpanIndex = (position) % gridSize;
-    // is left grid edge?
-    outRect.left = itemSpanIndex == 0 ? 0 : insetHorizontal;
-    // is top grid edge?
-    outRect.top = itemSpanIndex == position ? 0 : insetVertical;
+    int column = (currentPosition - firstAfterHeader) % gridSize;
+    int row = (currentPosition - firstAfterHeader) / gridSize;
+
+    outRect.top = row > 0 ? insetVertical : 0;
+    outRect.left = column > 0 ? insetHorizontal : 0;
     outRect.right = 0;
     outRect.bottom = 0;
   }

@@ -47,6 +47,13 @@ android {
       buildConfigField "boolean", "LOGGING_ENABLED", "false"
     }
   }
+
+  testOptions {
+    unitTests.all {
+      // All the usual Gradle options.
+      jvmArgs '-XX:MaxPermSize=256m'
+    }
+  }
 }
 
 dependencies {
@@ -61,6 +68,7 @@ dependencies {
   compile 'de.greenrobot:eventbus:2.4.0'
   compile 'com.tonicartos:superslim:0.4.13'
   compile 'com.github.castorflex.smoothprogressbar:library-circular:1.2.0'
+  testCompile 'junit:junit:4.12'
 }
 /*
  * Gets the version name from the latest Git tag

@@ -38,7 +38,7 @@
     </activity>
 
     <service
-      android:name=".connection.service.UpdateService"
+      android:name=".service.UpdateService"
       android:exported="false"/>
   </application>
 

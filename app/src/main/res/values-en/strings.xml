@@ -8,4 +8,5 @@
   <string name="category1">This week opening</string>
   <string name="category2">This month opening</string>
   <string name="category3">This year opening</string>
+  <string name="saved">Saved</string>
 </resources>

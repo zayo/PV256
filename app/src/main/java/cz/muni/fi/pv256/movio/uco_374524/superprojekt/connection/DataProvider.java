@@ -18,6 +18,7 @@ import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.MovieCredits;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.MovieWrapper;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.DateUtils;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.HeaderArrayList;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
@@ -32,7 +33,7 @@ import retrofit.http.Query;
 public class DataProvider {
 
   public interface DataLoaded {
-    void onDataLoaded(ArrayList<Movie> data);
+    void onDataLoaded(HeaderArrayList<Movie> data);
   }
 
   public interface CastLoaded {
@@ -98,8 +99,13 @@ public class DataProvider {
     }
   }
 
+  private static final String TAG = ".DataProvider";
+
   public void loadData(String genreIdString, DataLoaded listener) {
     cancelLoading();
+
+    Log.d(TAG, "loadData() called with: " + "genreIdString = [" + genreIdString + "], listener = ["
+      + listener + "]");
 
     final ResultDeliverBarrier barrier = new ResultDeliverBarrier(listener);
 
@@ -216,7 +222,7 @@ public class DataProvider {
     Call<MovieWrapper> getMovies(
       @Query("api_key") String api_key,
       @Query("sort_by") String sort,
-      @Query("with_genres") String genres,
+      @Query(value = "with_genres", encoded = true) String genres,
       @Query("primary_release_date.gte") String dateFrom,
       @Query("primary_release_date.lte") String dateTo,
       @Query("language") String lang

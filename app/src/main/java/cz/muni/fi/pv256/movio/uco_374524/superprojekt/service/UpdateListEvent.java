@@ -1,8 +1,7 @@
-package cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.service;
-
-import java.util.ArrayList;
+package cz.muni.fi.pv256.movio.uco_374524.superprojekt.service;
 
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.HeaderArrayList;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.Log;
 
 /**
@@ -12,14 +11,14 @@ public class UpdateListEvent {
 
   private static final String TAG = ".UpdateListEvent";
 
-  private ArrayList<Movie> data;
+  private HeaderArrayList<Movie> data;
 
-  public UpdateListEvent(ArrayList<Movie> data) {
+  public UpdateListEvent(HeaderArrayList<Movie> data) {
     Log.d(TAG, "UpdateListEvent ");
     this.data = data;
   }
 
-  public ArrayList<Movie> getData() {
+  public HeaderArrayList<Movie> getData() {
     Log.d(TAG, "getData ");
     return data;
   }

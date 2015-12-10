@@ -4,6 +4,10 @@ import android.app.Application;
 import android.os.Build;
 import android.os.StrictMode;
 
+import java.io.File;
+
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.AssetsFilesUtils;
+
 /**
  * Created by prasniatko on 21/09/15.
  */
@@ -14,6 +18,8 @@ public class App extends Application {
   public static App get() {
     return mInstance;
   }
+
+  private File mDatabaseFile;
 
   @Override
   public void onCreate() {
@@ -41,5 +47,15 @@ public class App extends Application {
       vmpb.detectLeakedClosableObjects();
     }
     StrictMode.setVmPolicy(vmpb.build());
+  }
+
+  public String getDatabaseFile(boolean test_variant) {
+    if (mDatabaseFile == null) {
+      mDatabaseFile = new File(getFilesDir(), "movies" + (test_variant ? "_test" : "") + ".db");
+      if (!mDatabaseFile.exists()) {
+        AssetsFilesUtils.copyFile(getAssets(), "movies.db", getFilesDir().getAbsolutePath());
+      }
+    }
+    return mDatabaseFile.getAbsolutePath();
   }
 }

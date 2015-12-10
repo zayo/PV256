@@ -79,6 +79,26 @@ public class DateUtils extends android.text.format.DateUtils {
   }
 
   /**
+   * Parse date from string, using default pattern.
+   *
+   * @param date String with date in format yyyy-MM-dd'T'HH:mm:ss
+   *
+   * @return Timestamp
+   */
+  @NonNull
+  public static Long parseDate(@NonNull String format, @Nullable String date) {
+    Long timestamp;
+    try {
+      timestamp =
+        new SimpleDateFormat(format, new Locale("cs", "CZ")).parse(date).getTime();
+    } catch (ParseException e) {
+      e.printStackTrace();
+      timestamp = 0L;
+    }
+    return timestamp;
+  }
+
+  /**
    * Parse date from string, using default time pattern.
    *
    * @param time String with date in format HH:mm

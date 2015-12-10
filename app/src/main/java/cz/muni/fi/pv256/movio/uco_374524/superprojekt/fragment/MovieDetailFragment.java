@@ -3,6 +3,7 @@ package cz.muni.fi.pv256.movio.uco_374524.superprojekt.fragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,11 @@ import java.util.ArrayList;
 
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.activity.BaseActivity;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.database.MovieDB;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Cast;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.CircleTransform;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.DateUtils;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.Log;
 
 /**
@@ -44,8 +47,7 @@ public class MovieDetailFragment extends Fragment {
 
   private LayoutInflater mLayoutInflater;
 
-  private int width = 0;
-  private int height = 0;
+  private FloatingActionButton mSaveFab;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,18 +68,14 @@ public class MovieDetailFragment extends Fragment {
     mYear = (TextView) root.findViewById(R.id.movie_year);
     mOverView = (TextView) root.findViewById(R.id.movie_overview);
 
-    mCastContainer = (LinearLayout) root.findViewById(R.id.cast_container);
+    mSaveFab = (FloatingActionButton) root.findViewById(R.id.fab);
 
-    Context ctx = getActivity();
-    if (ctx != null) {
-      width = ctx.getResources().getDisplayMetrics().widthPixels / 3;
-      height = Math.round(width * 1.41f);
-    }
+    mCastContainer = (LinearLayout) root.findViewById(R.id.cast_container);
 
     return root;
   }
 
-  public void setMovie(Movie movie) {
+  public void setMovie(final Movie movie) {
     Log.d(TAG, "setMovie() called with: " + "movie = [" + movie + "]");
     if (movie == null) {
       mContentView.setVisibility(View.INVISIBLE);
@@ -89,41 +87,64 @@ public class MovieDetailFragment extends Fragment {
 
     Glide.with(mTitleBackgroundImage.getContext())
       .load("http://image.tmdb.org/t/p/w1280" + movie.backdropPath)
-      .error(R.drawable.im_no_back)
-      .placeholder(R.drawable.im_placeholder_back)
+      .centerCrop()
       .diskCacheStrategy(DiskCacheStrategy.ALL)
       .skipMemoryCache(false)
+      .error(R.drawable.im_no_back)
+      .placeholder(R.drawable.im_placeholder_back)
+      .centerCrop()
       .into(mTitleBackgroundImage);
 
     Glide.with(mTitleImage.getContext())
       .load("http://image.tmdb.org/t/p/w500" + movie.coverPath)
-      .error(R.drawable.im_no_poster)
-      .placeholder(R.drawable.im_placeholder_poster)
       .diskCacheStrategy(DiskCacheStrategy.ALL)
       .skipMemoryCache(false)
+      .error(R.drawable.im_no_poster)
+      .placeholder(R.drawable.im_placeholder_poster)
       .into(mTitleImage);
 
     mTitleTranslated.setText(movie.title);
     mTitleOriginal.setText(movie.originalTitle);
     mOverView.setText(movie.overview);
-    mYear.setText(movie.releaseDate.substring(0, 4));
+    mYear.setText(DateUtils
+      .format("dd. MM. yyyy", DateUtils.parseDate(DateUtils.DEFAULT_DAY, movie.releaseDate)));
 
     mCastContainer.removeAllViews();
 
     mEmptyView.setVisibility(View.INVISIBLE);
     mContentView.setVisibility(View.VISIBLE);
+
+    if (MovieDB.get().getIds().contains(movie.id)) {
+      mSaveFab.setImageResource(R.drawable.ic_remove);
+    } else {
+      mSaveFab.setImageResource(R.drawable.ic_add);
+    }
+
+    mSaveFab.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (MovieDB.get().getIds().contains(movie.id)) {
+          MovieDB.get().delete(movie);
+          mSaveFab.setImageResource(R.drawable.ic_add);
+        } else {
+          MovieDB.get().insert(movie);
+          mSaveFab.setImageResource(R.drawable.ic_remove);
+        }
+      }
+    });
   }
 
   public void setCast(ArrayList<Cast> data) {
 
     mCastContainer.removeAllViews();
+
+    final Context context = getActivity();
     for (int i = 0, actorsSize = data.size(); i < actorsSize; i++) {
       final Cast person = data.get(i);
       View item = mLayoutInflater.inflate(R.layout.view_cast_item, mCastContainer, false);
       final TextView name = (TextView) item.findViewById(R.id.actor_name);
 
       final ImageView icon = (ImageView) item.findViewById(R.id.actor_image);
-      final Context context = getActivity();
       Glide.with(icon.getContext())
         .load("http://image.tmdb.org/t/p/w185" + person.image)
         .transform(new CircleTransform(context))

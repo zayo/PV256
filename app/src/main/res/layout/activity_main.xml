@@ -35,22 +35,6 @@
     android:background="@color/white"
     android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
     >
-    <TextView
-      android:id="@+id/fragment_discover"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:padding="16dp"
-      android:text="Discover"
-      android:clickable="true"
-      />
-    <TextView
-      android:id="@+id/fragment_favorites"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:padding="16dp"
-      android:text="Favorites"
-      android:clickable="true"
-      />
     <LinearLayout
       android:orientation="horizontal"
       android:layout_width="match_parent"

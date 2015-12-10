@@ -31,7 +31,6 @@ public class Movie implements Parcelable {
   @Json(name = "overview")
   public String overview;
 
-
   public boolean isHeader = false;
   //public ArrayList<Actor> actors = new ArrayList<>();
 

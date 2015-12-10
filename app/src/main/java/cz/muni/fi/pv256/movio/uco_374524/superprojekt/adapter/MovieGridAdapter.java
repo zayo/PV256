@@ -13,10 +13,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tonicartos.superslim.GridSLM;
 import com.tonicartos.superslim.LayoutManager;
 
-import java.util.ArrayList;
-
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.HeaderArrayList;
 
 /**
  * Created by prasniatko on 26/10/15.
@@ -26,14 +25,16 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Hold
   public static final int VIEW_TYPE_HEADER = 0;
   public static final int VIEW_TYPE_CONTENT = 1;
 
-  private ArrayList<Movie> mItems;
+  private HeaderArrayList<Movie> mItems;
   private int grid_column_width;
   private int grid_column_count;
 
   private int width = 0;
   private int height = 0;
 
-  public MovieGridAdapter(Context ctx, ArrayList<Movie> data, int column_width, int column_count) {
+  private int mGroupCount;
+
+  public MovieGridAdapter(Context ctx, HeaderArrayList<Movie> data, int column_width, int column_count) {
     mItems = data;
     grid_column_width = column_width;
     grid_column_count = column_count;
@@ -76,7 +77,7 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Hold
     }
     lp.setSlm(GridSLM.ID);
     lp.setColumnWidth(grid_column_width);
-    lp.setFirstPosition(position - (position % 7));
+    lp.setFirstPosition(position - (position % mItems.getHeaderEvery()));
     lp.setNumColumns(grid_column_count);
     holder.itemView.setLayoutParams(lp);
   }

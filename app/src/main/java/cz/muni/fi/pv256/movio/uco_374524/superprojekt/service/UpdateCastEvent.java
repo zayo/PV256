@@ -1,4 +1,4 @@
-package cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.service;
+package cz.muni.fi.pv256.movio.uco_374524.superprojekt.service;
 
 import java.util.ArrayList;
 
