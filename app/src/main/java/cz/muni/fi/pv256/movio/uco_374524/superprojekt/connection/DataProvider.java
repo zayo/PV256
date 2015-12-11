@@ -184,6 +184,10 @@ public class DataProvider {
       });
   }
 
+  public Movie loadMovie(long movie_id) throws IOException {
+    return mService.getMovie(API_KEY, Locale.getDefault().getLanguage(), movie_id).execute().body();
+  }
+
   public void loadGenres(Callback<GenresWrapper> callback) {
     mService.getGenres(API_KEY, Locale.getDefault().getLanguage()).enqueue(callback);
   }
@@ -216,6 +220,13 @@ public class DataProvider {
     Call<GenresWrapper> getGenres(
       @Query("api_key") String api_key,
       @Query("language") String lang
+    );
+
+    @GET("/3/movie/{id}")
+    Call<Movie> getMovie(
+      @Query("api_key") String api_key,
+      @Query("language") String lang,
+      @Path("id") long movie_id
     );
 
     @GET("/3/discover/movie")

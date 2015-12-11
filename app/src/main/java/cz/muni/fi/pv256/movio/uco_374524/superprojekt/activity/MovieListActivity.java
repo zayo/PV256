@@ -17,6 +17,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -37,6 +38,7 @@ import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.service.UpdateCastEvent;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.service.UpdateListEvent;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.service.UpdateService;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.synchronization.SyncAdapter;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.HeaderArrayList;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.Log;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.RecyclerItemClickListener;
@@ -183,6 +185,8 @@ public class MovieListActivity
       Toast.makeText(this, "No internet connection, data could be inaccurate.", Toast.LENGTH_LONG)
         .show();
     }
+
+    SyncAdapter.initializeSyncAdapter(this);
   }
 
   @Override
@@ -206,6 +210,15 @@ public class MovieListActivity
         }
       });
     return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == R.id.action_refresh){
+      SyncAdapter.syncImmediately(this);
+      return true;
+    }
+    return super.onOptionsItemSelected(item);
   }
 
   @Override

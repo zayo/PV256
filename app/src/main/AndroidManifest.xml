@@ -9,6 +9,14 @@
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
+  <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+  <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+  <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+
+  <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+  <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+  <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+
   <application
     android:name=".App"
     android:allowBackup="true"
@@ -40,6 +48,26 @@
       android:name=".service.UpdateService"
       android:exported="false"
       />
+    <service
+      android:name="cz.muni.fi.pv256.movio.uco_374524.superprojekt.synchronization.AuthenticatorService">
+      <intent-filter>
+        <action android:name="android.accounts.AccountAuthenticator"/>
+      </intent-filter>
+      <meta-data
+        android:name="android.accounts.AccountAuthenticator"
+        android:resource="@xml/authenticator" />
+    </service>
+    <service
+      android:name="cz.muni.fi.pv256.movio.uco_374524.superprojekt.synchronization.SyncService"
+      android:exported="true" >
+      <intent-filter>
+        <action android:name="android.content.SyncAdapter" />
+      </intent-filter>
+
+      <meta-data
+        android:name="android.content.SyncAdapter"
+        android:resource="@xml/sync_adapter" />
+    </service>
     <provider
       android:name=".database.MovieProvider"
       android:authorities="cz.muni.fi.pv256.movio.uco_374524"
@@ -47,5 +75,4 @@
       android:syncable="true"
       />
   </application>
-
 </manifest>
