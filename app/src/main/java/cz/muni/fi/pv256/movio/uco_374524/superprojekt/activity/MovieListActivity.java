@@ -27,7 +27,8 @@ import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.adapter.GenreFilterAdapter;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.DataProvider;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.NetworkStateChangedReceiver;
-import cz.muni.fi.pv256.movio.uco_374524.superprojekt.database.MovieDB;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.database.MovieContract;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.database.MovieManager;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.fragment.MovieDetailFragment;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.fragment.MoviesListFragment;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Genre;
@@ -300,25 +301,26 @@ public class MovieListActivity
 
   @Override
   public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-    return new CursorLoader(this) {
-      @Override
-      public Cursor loadInBackground() {
-        return MovieDB.get().getMoviesCursor();
-      }
-    };
+    return new CursorLoader(this, MovieContract.MovieEntry.CONTENT_URI,
+      MovieManager.MOVIE_COLS,
+      null,
+      null,
+      MovieContract.MovieEntry.COLUMN_RELEASE_DATE + " ASC ");
   }
 
   @Override
   public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-    HeaderArrayList<Movie> list = new HeaderArrayList<>();
-    list.add(new Movie(getString(R.string.saved), true));
-    list.setHeaderEvery(Integer.MAX_VALUE);
-    while (data.moveToNext()) {
-      list.add(MovieDB.getMovieFromCursor(data));
+    if (data != null && data.getCount() > 0) {
+      HeaderArrayList<Movie> list = new HeaderArrayList<>();
+      list.add(new Movie(getString(R.string.saved), true));
+      list.setHeaderEvery(Integer.MAX_VALUE);
+      while (data.moveToNext()) {
+        list.add(MovieManager.getMovieFromCursor(data));
+      }
+      data.close();
+      mDataSaved = list;
+      setData();
     }
-    data.close();
-    mDataSaved = list;
-    setData();
   }
 
   @Override

@@ -32,7 +32,6 @@ public class Movie implements Parcelable {
   public String overview;
 
   public boolean isHeader = false;
-  //public ArrayList<Actor> actors = new ArrayList<>();
 
   public Movie() {
   }
@@ -41,10 +40,6 @@ public class Movie implements Parcelable {
     this.title = title;
     this.isHeader = isHeader;
   }
-
-  /*public void setActors(ArrayList<Actor> actors) {
-    this.actors.addAll(actors);
-  }*/
 
   public Movie(Parcel in) {
     id = in.readLong();
@@ -55,7 +50,6 @@ public class Movie implements Parcelable {
     originalTitle = in.readString();
     overview = in.readString();
     isHeader = in.readByte() != 0;
-    //actors = in.createTypedArrayList(Actor.CREATOR);
   }
 
   public int describeContents() {
@@ -71,7 +65,6 @@ public class Movie implements Parcelable {
     dest.writeString(originalTitle);
     dest.writeString(overview);
     dest.writeByte((byte) (isHeader ? 1 : 0));
-    //dest.writeTypedList(actors);
   }
 
   public static final Parcelable.Creator<Movie> CREATOR =
@@ -84,4 +77,42 @@ public class Movie implements Parcelable {
         return new Movie[size];
       }
     };
+
+  /*public String toString() {
+    StringBuilder result = new StringBuilder();
+    String newLine = System.getProperty("line.separator");
+
+    result.append(this.getClass().getName());
+    result.append(" Object {");
+    result.append(newLine);
+
+    //determine fields declared in this class only (no fields of superclass)
+    Field[] fields = this.getClass().getDeclaredFields();
+
+    //print field names paired with their values
+    for (Field field : fields) {
+      result.append("  ");
+      try {
+        result.append(field.getName());
+        result.append(": ");
+        //requires access to private field:
+        result.append(field.get(this));
+      } catch (IllegalAccessException ex) {
+        //nothing
+      }
+      result.append(newLine);
+    }
+    result.append("}");
+
+    return result.toString();
+  }*/
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof Movie) {
+      Movie movie = (Movie) o;
+      return id == movie.id && title.equalsIgnoreCase(movie.title);
+    }
+    return false;
+  }
 }

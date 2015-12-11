@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.activity.BaseActivity;
-import cz.muni.fi.pv256.movio.uco_374524.superprojekt.database.MovieDB;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.database.MovieManager;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Cast;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.CircleTransform;
@@ -49,6 +49,8 @@ public class MovieDetailFragment extends Fragment {
 
   private FloatingActionButton mSaveFab;
 
+  private MovieManager mManager;
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
@@ -71,6 +73,8 @@ public class MovieDetailFragment extends Fragment {
     mSaveFab = (FloatingActionButton) root.findViewById(R.id.fab);
 
     mCastContainer = (LinearLayout) root.findViewById(R.id.cast_container);
+
+    mManager = new MovieManager(getActivity());
 
     return root;
   }
@@ -114,7 +118,7 @@ public class MovieDetailFragment extends Fragment {
     mEmptyView.setVisibility(View.INVISIBLE);
     mContentView.setVisibility(View.VISIBLE);
 
-    if (MovieDB.get().getIds().contains(movie.id)) {
+    if (mManager.contains(movie.id)) {
       mSaveFab.setImageResource(R.drawable.ic_remove);
     } else {
       mSaveFab.setImageResource(R.drawable.ic_add);
@@ -123,11 +127,11 @@ public class MovieDetailFragment extends Fragment {
     mSaveFab.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (MovieDB.get().getIds().contains(movie.id)) {
-          MovieDB.get().delete(movie);
+        if (mManager.contains(movie.id)) {
+          mManager.delete(movie);
           mSaveFab.setImageResource(R.drawable.ic_add);
         } else {
-          MovieDB.get().insert(movie);
+          mManager.add(movie);
           mSaveFab.setImageResource(R.drawable.ic_remove);
         }
       }
