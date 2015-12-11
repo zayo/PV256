@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name" translatable="false">SuperProjekt</string>
+  <string name="app_name" translatable="false">Movio</string>
   <string name="action_settings">Settings</string>
   <string name="activity_detail">Movie Detail</string>
   <string name="empty_list">No Data Available</string>

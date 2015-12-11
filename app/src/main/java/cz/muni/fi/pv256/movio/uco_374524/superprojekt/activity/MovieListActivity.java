@@ -17,7 +17,6 @@ import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -39,6 +38,7 @@ import cz.muni.fi.pv256.movio.uco_374524.superprojekt.service.UpdateCastEvent;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.service.UpdateListEvent;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.service.UpdateService;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.synchronization.SyncAdapter;
+import cz.muni.fi.pv256.movio.uco_374524.superprojekt.synchronization.SyncDoneEvent;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.HeaderArrayList;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.Log;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.RecyclerItemClickListener;
@@ -85,21 +85,41 @@ public class MovieListActivity
 
   @SuppressWarnings("unused")
   public void onEvent(final UpdateListEvent event) {
-    if (event.getData() == null) {
-      showNotification();
-    }
-    mDataDiscover = event.getData();
-    setData();
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        if (event.getData() == null) {
+          showNotification();
+        }
+        mDataDiscover = event.getData();
+        setData();
+      }
+    });
   }
 
   @SuppressWarnings("unused")
   public void onEvent(final UpdateCastEvent event) {
-    if (event.getData() == null) {
-      showNotification();
-    }
-    if (mDetailFragment != null) {
-      mDetailFragment.setCast(event.getData());
-    }
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        if (event.getData() == null) {
+          showNotification();
+        }
+        if (mDetailFragment != null) {
+          mDetailFragment.setCast(event.getData());
+        }
+      }
+    });
+  }
+
+  @SuppressWarnings("unused")
+  public void onEvent(final SyncDoneEvent event) {
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        getLoaderManager().restartLoader(0, null, MovieListActivity.this);
+      }
+    });
   }
 
   @Override
@@ -213,15 +233,6 @@ public class MovieListActivity
   }
 
   @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.action_refresh){
-      SyncAdapter.syncImmediately(this);
-      return true;
-    }
-    return super.onOptionsItemSelected(item);
-  }
-
-  @Override
   public void allSelected(boolean isAllSelected) {
     mGenresCheckboxAll.setOnCheckedChangeListener(null);
     mGenresCheckboxAll.setChecked(isAllSelected);
@@ -278,13 +289,13 @@ public class MovieListActivity
 
   public void requestList(String genres) {
     if (savedData) {
-      setData();
-      return;
+      SyncAdapter.syncImmediately(this);
+    } else {
+      Intent intent = new Intent(Intent.ACTION_SYNC, null, this, UpdateService.class);
+      intent.putExtra("action", "list");
+      intent.putExtra("genres", genres);
+      startService(intent);
     }
-    Intent intent = new Intent(Intent.ACTION_SYNC, null, this, UpdateService.class);
-    intent.putExtra("action", "list");
-    intent.putExtra("genres", genres);
-    startService(intent);
   }
 
   @Override

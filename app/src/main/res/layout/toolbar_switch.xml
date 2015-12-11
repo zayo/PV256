@@ -7,4 +7,6 @@
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
   android:layout_gravity="center_vertical"
+  android:paddingRight="@dimen/padmar_normal"
+  android:paddingEnd="@dimen/padmar_normal"
   />

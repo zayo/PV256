@@ -20,6 +20,7 @@ import cz.muni.fi.pv256.movio.uco_374524.superprojekt.R;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.connection.DataProvider;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.database.MovieManager;
 import cz.muni.fi.pv256.movio.uco_374524.superprojekt.model.Movie;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by prasniatko on 11/12/15.
@@ -133,6 +134,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
   @Override
   public void onPerformSync(Account account, Bundle extras, String authority,
     ContentProviderClient provider, SyncResult syncResult) {
+
+    EventBus bus = EventBus.getDefault();
+
     MovieManager mm = new MovieManager(getContext());
 
     ArrayList<Movie> saved = mm.getAll();
@@ -155,6 +159,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         showNotification(updated_count, size);
       }
     }
+
+    bus.post(new SyncDoneEvent());
   }
 
   public void showNotification(int count, int size) {

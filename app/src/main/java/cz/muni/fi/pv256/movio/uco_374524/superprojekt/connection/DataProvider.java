@@ -185,7 +185,7 @@ public class DataProvider {
   }
 
   public Movie loadMovie(long movie_id) throws IOException {
-    return mService.getMovie(API_KEY, Locale.getDefault().getLanguage(), movie_id).execute().body();
+    return mService.getMovie(movie_id, API_KEY, Locale.getDefault().getLanguage()).execute().body();
   }
 
   public void loadGenres(Callback<GenresWrapper> callback) {
@@ -224,9 +224,9 @@ public class DataProvider {
 
     @GET("/3/movie/{id}")
     Call<Movie> getMovie(
+      @Path("id") long movie_id,
       @Query("api_key") String api_key,
-      @Query("language") String lang,
-      @Path("id") long movie_id
+      @Query("language") String lang
     );
 
     @GET("/3/discover/movie")
