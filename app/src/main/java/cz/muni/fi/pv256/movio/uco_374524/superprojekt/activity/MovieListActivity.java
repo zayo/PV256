@@ -334,7 +334,7 @@ public class MovieListActivity
 
   @Override
   public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-    if (data != null && data.getCount() > 0) {
+    if (data != null) {
       HeaderArrayList<Movie> list = new HeaderArrayList<>();
       list.add(new Movie(getString(R.string.saved), true));
       list.setHeaderEvery(Integer.MAX_VALUE);

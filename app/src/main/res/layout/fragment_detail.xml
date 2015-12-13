@@ -60,7 +60,7 @@
                   android:layout_height="0dp"
                   android:layout_weight="9"
                   android:ellipsize="end"
-                  android:text="The Grey"
+                  android:text="@string/sample_movie_name"
                   android:gravity="bottom"
                   />
                 <cz.muni.fi.pv256.movio.uco_374524.superprojekt.utils.view.AutoResizeTextView
@@ -69,7 +69,7 @@
                   android:layout_width="match_parent"
                   android:layout_height="0dp"
                   android:layout_weight="3"
-                  android:text="The Grey"
+                  android:text="@string/sample_original_movie_name"
                   android:layout_marginTop="@dimen/grid_spacing"
                   android:maxLines="2"
                   />
@@ -82,7 +82,7 @@
                   android:gravity="bottom|start"
                   android:layout_gravity="bottom"
                   android:singleLine="true"
-                  android:text="2011"
+                  android:text="@string/sample_date"
                   />
               </LinearLayout>
             </FrameLayout>
@@ -109,7 +109,7 @@
             style="@style/Text.Medium.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Overview"
+            android:text="@string/label_overview"
             android:paddingTop="@dimen/padmar_normal"
             android:paddingLeft="@dimen/padmar_normal"
             android:paddingRight="@dimen/padmar_normal"
@@ -120,7 +120,7 @@
             style="@style/Text.Dark.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="After their plane crashes in Alaska, six oil workers are led by a skilled huntsman to survival, but a pack of merciless wolves haunts their every step."
+            android:text="@string/sample_overview_text"
             android:padding="@dimen/padmar_normal"
             />
           <View
@@ -132,7 +132,7 @@
             style="@style/Text.Medium.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cast"
+            android:text="@string/label_cast"
             android:padding="@dimen/padmar_normal"
             android:textStyle="bold"
             />

@@ -21,7 +21,7 @@
     android:id="@+id/actor_name"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Liam Neeson"
+    android:text="@string/sample_actor_name"
     android:padding="@dimen/padmar_normal"
     android:layout_gravity="center"
     />

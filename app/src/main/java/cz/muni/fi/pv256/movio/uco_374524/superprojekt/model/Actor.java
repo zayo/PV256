@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by prasniatko on 18/10/15.
+ * Base actor model class
  */
 public class Actor implements Parcelable {
 

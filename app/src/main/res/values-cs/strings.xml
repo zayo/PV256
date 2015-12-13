@@ -10,4 +10,6 @@
   <string name="category3">Tento rok v kinech</string>
   <string name="saved">Uložené</string>
   <string name="updated">%1$d z vašich %2$d oblíbených bylo aktualizováno.</string>
+  <string name="label_cast">Hrají</string>
+  <string name="label_overview">Obsah</string>
 </resources>

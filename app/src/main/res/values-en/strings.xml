@@ -10,4 +10,6 @@
   <string name="category3">This year opening</string>
   <string name="saved">Saved</string>
   <string name="updated">%1$d of your %2$d favorites were updated.</string>
+  <string name="label_cast">Cast</string>
+  <string name="label_overview">Overview</string>
 </resources>

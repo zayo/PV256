@@ -10,4 +10,6 @@
   <string name="category3">Si počkáš</string>
   <string name="saved">Užsompozrel</string>
   <string name="updated">%1$d of your %2$d favorites were updated.</string>
+  <string name="label_cast">Kohouvidiš</string>
+  <string name="label_overview">Očemtoje</string>
 </resources>

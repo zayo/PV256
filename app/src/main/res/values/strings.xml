@@ -15,4 +15,13 @@
   <string name="content_authority" translatable="false">cz.muni.fi.pv256.movio.uco_374524</string>
   <string name="account_type" translatable="false">@string/content_authority</string>
   <string name="updated">%1$d of your %2$d favorites were updated.</string>
+
+  <string name="label_cast">Cast</string>
+  <string name="label_overview">Overview</string>
+
+  <string name="sample_actor_name" translatable="false">Actor Name</string>
+  <string name="sample_overview_text" translatable="false">Sample Overview Text</string>
+  <string name="sample_date" translatable="false">11. 11. 2011</string>
+  <string name="sample_original_movie_name" translatable="false">Original Movie Name</string>
+  <string name="sample_movie_name" translatable="false">Movie Name</string>
 </resources>
